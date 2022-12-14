@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import DataSwitcher from "./components/DataSwitcher";
+import Navbar from "./components/Navbar";
+import TableComp from "./components/TableComp";
+import TopBox from "./components/TopBox";
+import "normalize.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper className="App">
+      <Navbar></Navbar>
+      <section className="main-section">
+        <TopBox></TopBox>
+        <DataSwitcher></DataSwitcher>
+        <TableComp></TableComp>
+      </section>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  max-width: 1400px;
+  height: 100%;
+
+  margin: 0 auto;
+  background-color: #fff;
+
+  .main-section {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+`;
 
 export default App;

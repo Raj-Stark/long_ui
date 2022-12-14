@@ -130,3 +130,7 @@ p {
     line-height: 1;
   }
 }
+
+.active {
+  background: red;
+}

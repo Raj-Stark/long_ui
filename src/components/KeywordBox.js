@@ -53,8 +53,6 @@ const KeywordBox = () => {
 
   const renderValue = keywordDifficulty(rowData.keyword_difficulty);
 
-  console.log(typeof renderValue.color);
-
   return (
     <Wrapper>
       <p className="title">Keyword Difficulty</p>
@@ -68,7 +66,7 @@ const KeywordBox = () => {
             strokeWidth={15}
             styles={{
               background: {
-                fill: parseInt(renderValue.color),
+                fill: `${renderValue.color}`,
               },
             }}
           />

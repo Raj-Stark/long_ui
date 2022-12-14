@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useTable } from "react-table";
+import { useSortBy, useTable } from "react-table";
 import styled from "styled-components";
 import { useTableContext } from "../context/tableContext";
 import { columnNames, tableData } from "../utils/constants";
@@ -13,10 +13,13 @@ const TableComp = () => {
     [dataState]
   );
 
-  const tableInstance = useTable({
-    columns: columns,
-    data: data,
-  });
+  const tableInstance = useTable(
+    {
+      columns: columns,
+      data: data,
+    },
+    useSortBy
+  );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
@@ -33,8 +36,17 @@ const TableComp = () => {
               <tr {...headerGroup.getHeaderGroupProps()} className="head-row">
                 {headerGroup.headers.map((column) => {
                   return (
-                    <th {...column.getHeaderProps()}>
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
                       {column.render("Header")}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? "⬇️"
+                            : "⬆️"
+                          : ""}
+                      </span>
                     </th>
                   );
                 })}
@@ -45,6 +57,7 @@ const TableComp = () => {
         <tbody {...getTableBodyProps()} className="t-body">
           {rows.map((row) => {
             prepareRow(row);
+
             return (
               <tr
                 {...row.getRowProps()}
@@ -93,6 +106,9 @@ const Wrapper = styled.div`
     background: #fff;
     tr {
       cursor: pointer;
+      &:hover {
+        background: #d3f8d3;
+      }
     }
   }
 

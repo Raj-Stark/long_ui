@@ -7,7 +7,7 @@ const Results = () => {
   return (
     <Wrapper>
       <p className="title">Result</p>
-      <h3>{Math.ceil(rowData.numberOfResult / 1000000)} M</h3>
+      <h3>{Math.ceil(rowData.numberOfResult / 10000000)} M</h3>
     </Wrapper>
   );
 };

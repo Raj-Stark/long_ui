@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 const tableData = {
   raw_related_data: [
     {
@@ -201,10 +203,12 @@ const columnNames = [
     Header: "Intent",
     accessor: "intent",
     Cell: (props) => {
+      const renderValue = intentMap[props.cell.row.values.intent];
+
       return (
-        <p style={{ color: props.value === "SUCCESS" ? "green" : "red" }}>
-          {props.value}
-        </p>
+        <Wrapper bg={renderValue.color.bg} color={renderValue.color.text}>
+          {renderValue.type.charAt(0)}
+        </Wrapper>
       );
     },
   },
@@ -228,6 +232,17 @@ const columnNames = [
   {
     Header: "Number of Results",
     accessor: "numberOfResult",
+    Cell: (props) => {
+      const renderValue = props.cell.row.values.numberOfResult;
+
+      let newVal = renderValue / Math.ceil(10000000);
+
+      return (
+        <Result>
+          <p>{newVal} M</p>
+        </Result>
+      );
+    },
   },
 ];
 
@@ -242,3 +257,43 @@ export { tableData, columnNames };
 //     "status": 200,
 //     "created_date": "2022-11-19T05:39:27.001544"
 //   }
+
+const Wrapper = styled.div`
+  /* padding: 0.1rem; */
+  font-size: 1rem;
+  border-radius: 50%;
+  text-align: center;
+  background: ${(props) => props.bg};
+  color: ${(props) => props.color};
+`;
+
+const Result = styled.div`
+  text-align: left;
+  margin: 0;
+  p {
+    margin-bottom: 0;
+  }
+`;
+
+export const intentMap = {
+  0: {
+    type: "Commercial",
+    hoverText: "The user wants to investigate brands or services.",
+    color: { bg: "#FCE081", text: "#A75800", hover: "#ffca6e" },
+  },
+  1: {
+    type: "Informational",
+    hoverText: "The user wants to find an answer to a specific question.",
+    color: { bg: "#C4E5FE", text: "#006DCA", hover: "#61c6ff" },
+  },
+  2: {
+    type: "Navigational",
+    hoverText: "The user wants to find a specific page or site.",
+    color: { bg: "#EDD9FF", text: "#8649E1", hover: "#c59dfa" },
+  },
+  3: {
+    type: "Transactional",
+    hoverText: "The user wants to complete an action (conversion).",
+    color: { bg: "#9EF2C9", text: "#007C65", hover: "#11d6a6" },
+  },
+};
